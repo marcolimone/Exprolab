@@ -10,7 +10,6 @@ For the dowload and installation of this assignment the ser need to go in the *s
 - git clone https://github.com/marcolimone/Exprolab.git
 
 Then to run the code need to run a launch file that start all the node and the state machine:
-- 
 
 
 ## Commented code
