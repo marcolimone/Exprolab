@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="classmy__state__machine_1_1_controller" kind="class" language="Python" prot="public">
+    <compoundname>my_state_machine::Controller</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">State</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classmy__state__machine_1_1_controller_1ae78890ca00af1182d9250d52d2f92d9a" prot="private" static="no" mutable="no">
+        <type></type>
+        <definition>my_state_machine.Controller::_helper</definition>
+        <argsstring></argsstring>
+        <name>_helper</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/my_state_machine.py" line="185" column="1" bodyfile="scripts/my_state_machine.py" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classmy__state__machine_1_1_controller_1aa2dd8314c75511183fe87388fbd2c8ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def my_state_machine.Controller.__init__</definition>
+        <argsstring>(self)</argsstring>
+        <name>__init__</name>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/my_state_machine.py" line="183" column="1" bodyfile="scripts/my_state_machine.py" bodystart="183" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="classmy__state__machine_1_1_controller_1a10cbefb8fe2c831728b9647d5ff741f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def my_state_machine.Controller.execute</definition>
+        <argsstring>(self, userdata)</argsstring>
+        <name>execute</name>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>userdata</type>
+          <defname>userdata</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/my_state_machine.py" line="191" column="1" bodyfile="scripts/my_state_machine.py" bodystart="191" bodyend="209"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><verbatim>This class describe what happen when the state machine is in the Controller state, to exit from this state the robot need to reach the desired room.
+Another way to exit from this state is when arrive the message of battery low.</verbatim> </para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>State</label>
+      </node>
+      <node id="1">
+        <label>my_state_machine.Controller</label>
+        <link refid="classmy__state__machine_1_1_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>State</label>
+      </node>
+      <node id="1">
+        <label>my_state_machine.Controller</label>
+        <link refid="classmy__state__machine_1_1_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="scripts/my_state_machine.py" line="175" column="1" bodyfile="scripts/my_state_machine.py" bodystart="175" bodyend="210"/>
+    <listofallmembers>
+      <member refid="classmy__state__machine_1_1_controller_1aa2dd8314c75511183fe87388fbd2c8ba" prot="public" virt="non-virtual"><scope>my_state_machine::Controller</scope><name>__init__</name></member>
+      <member refid="classmy__state__machine_1_1_controller_1ae78890ca00af1182d9250d52d2f92d9a" prot="private" virt="non-virtual"><scope>my_state_machine::Controller</scope><name>_helper</name></member>
+      <member refid="classmy__state__machine_1_1_controller_1a10cbefb8fe2c831728b9647d5ff741f0" prot="public" virt="non-virtual"><scope>my_state_machine::Controller</scope><name>execute</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.17">
+  <compound refid="classmy__state__machine_1_1_building__map" kind="class"><name>my_state_machine::Building_map</name>
+    <member refid="classmy__state__machine_1_1_building__map_1a5933ce3116051498f33bec1a61b6be1f" kind="variable"><name>_helper</name></member>
+    <member refid="classmy__state__machine_1_1_building__map_1a1ac9b0cbeaa588d4f6917f6315b8d28f" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_building__map_1a3695d4c9070fbeee5da7b9a58fbbd37c" kind="function"><name>execute</name></member>
+  </compound>
+  <compound refid="classmy__state__machine_1_1_controller" kind="class"><name>my_state_machine::Controller</name>
+    <member refid="classmy__state__machine_1_1_controller_1ae78890ca00af1182d9250d52d2f92d9a" kind="variable"><name>_helper</name></member>
+    <member refid="classmy__state__machine_1_1_controller_1aa2dd8314c75511183fe87388fbd2c8ba" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_controller_1a10cbefb8fe2c831728b9647d5ff741f0" kind="function"><name>execute</name></member>
+  </compound>
+  <compound refid="classmy__state__machine_1_1_helper" kind="class"><name>my_state_machine::Helper</name>
+    <member refid="classmy__state__machine_1_1_helper_1a472a0a4306d24b5011980824b16a2c55" kind="variable"><name>mutex</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1a0eafc0b4505e7aa9db40eae16b879907" kind="variable"><name>change_state</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1a76d90c9f24e7d9c2f25b01c0721b396d" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1ae048e98231e38f005a2215dba08b1baf" kind="function"><name>batterylowCallback</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1a82ebee70ccb38707a9fc6525ace8228d" kind="function"><name>buildingmapCallback</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1ab68b883bd7ecaf91e60ca76f7a6d89bf" kind="function"><name>plannerCallback</name></member>
+    <member refid="classmy__state__machine_1_1_helper_1a112801ea5175d772ef8a71712eba322d" kind="function"><name>controllerCallback</name></member>
+  </compound>
+  <compound refid="classmy__state__machine_1_1_planner" kind="class"><name>my_state_machine::Planner</name>
+    <member refid="classmy__state__machine_1_1_planner_1a7a0604499eb3b5d8090b6461eb0a4a81" kind="variable"><name>_helper</name></member>
+    <member refid="classmy__state__machine_1_1_planner_1ac4fe08df6cd132728e7f25de7a7775fe" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_planner_1a72df9bd41e5128b9915549ee248f9b45" kind="function"><name>execute</name></member>
+  </compound>
+  <compound refid="classmy__state__machine_1_1_recharge" kind="class"><name>my_state_machine::Recharge</name>
+    <member refid="classmy__state__machine_1_1_recharge_1a44b5e41cbfeaae6a6db701b6fe2bf40b" kind="variable"><name>_helper</name></member>
+    <member refid="classmy__state__machine_1_1_recharge_1abdb0a981c087ca35aa84e183508863ac" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_recharge_1a0150fdb3b309d2b5b650d70e9e4c0576" kind="function"><name>execute</name></member>
+  </compound>
+  <compound refid="classmy__state__machine_1_1_wait" kind="class"><name>my_state_machine::Wait</name>
+    <member refid="classmy__state__machine_1_1_wait_1a39b01351a11bee74e870a223f54ced74" kind="variable"><name>_helper</name></member>
+    <member refid="classmy__state__machine_1_1_wait_1a51e205efaa30eaa8fd5626526b42867f" kind="function"><name>__init__</name></member>
+    <member refid="classmy__state__machine_1_1_wait_1a2b5a9f2eb56c372eb91a99b0dc465594" kind="function"><name>execute</name></member>
+  </compound>
+  <compound refid="namespacebattery__low__publisher" kind="namespace"><name>battery_low_publisher</name>
+    <member refid="namespacebattery__low__publisher_1a0c52e9041563bfda89556f520249b701" kind="function"><name>talker</name></member>
+  </compound>
+  <compound refid="namespacebattery__low__sub" kind="namespace"><name>battery_low_sub</name>
+    <member refid="battery__low__sub_8py_1ac63150fc39fde972e2e0e3c5d0389d07" kind="variable"><name>BATTERY_LOW</name></member>
+    <member refid="battery__low__sub_8py_1a298817c22da7deefe6bc08ef457b0795" kind="variable"><name>BATTERY_OK</name></member>
+    <member refid="battery__low__sub_8py_1a3a8c9b36679bf6ec1b3d0676c3cc5b22" kind="function"><name>callback</name></member>
+    <member refid="battery__low__sub_8py_1a8d5f8b53c4a45c90b21d8e90797cee1d" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="namespaceconf" kind="namespace"><name>conf</name>
+    <member refid="conf_8py_1a332f430461432dc465213f884a1e4967" kind="variable"><name>shell</name></member>
+    <member refid="conf_8py_1a45653c983098153b78e33600e39230eb" kind="variable"><name>project</name></member>
+    <member refid="conf_8py_1a33fa97cf51dcb25970fbf53f10159589" kind="variable"><name>copyright</name></member>
+    <member refid="conf_8py_1a637c239d256432248aa8d9f3ab0b8c52" kind="variable"><name>author</name></member>
+    <member refid="conf_8py_1a325dc746d8bf05c54d26351c35a21d90" kind="variable"><name>release</name></member>
+    <member refid="conf_8py_1ae475e080536acb271a0a0efe56c3ba42" kind="variable"><name>extensions</name></member>
+    <member refid="conf_8py_1ae850ae634911b713e036b43894fdd525" kind="variable"><name>templates_path</name></member>
+    <member refid="conf_8py_1a7ad48fb6f3e9b129c02346ea0d3527c1" kind="variable"><name>exclude_patterns</name></member>
+    <member refid="conf_8py_1a3117edf4443d9b8c70a9f0f44294ba79" kind="variable"><name>highlight_language</name></member>
+    <member refid="conf_8py_1a10af2a769eb3bd3322e874f677e435b1" kind="variable"><name>source_suffix</name></member>
+    <member refid="conf_8py_1a6fcd7e5236f355b1e1a55f9d95988810" kind="variable"><name>master_doc</name></member>
+    <member refid="conf_8py_1a6c3bfcc1a44546c1c75ce20f55bd0fd6" kind="variable"><name>html_theme</name></member>
+    <member refid="conf_8py_1af4fb5d8851ccaade135c2668dd3ced41" kind="variable"><name>html_static_path</name></member>
+    <member refid="conf_8py_1a8375f4f963de3ac8026eaa9beced9564" kind="variable"><name>intersphinx_mapping</name></member>
+    <member refid="conf_8py_1a8fe7f0d85f975f4ecba5cb6066959a09" kind="variable"><name>todo_include_todos</name></member>
+    <member refid="conf_8py_1acb47d2c0c2904fa7d36b63142533f383" kind="variable"><name>breathe_projects</name></member>
+    <member refid="conf_8py_1a6eba2d2c7ae923054b1c49e686ec89b9" kind="variable"><name>breathe_default_project</name></member>
+    <member refid="conf_8py_1a54585428ce84441199d9dfd7087e2243" kind="variable"><name>breathe_default_members</name></member>
+  </compound>
+  <compound refid="namespacecontroller__pub" kind="namespace"><name>controller_pub</name>
+    <member refid="namespacecontroller__pub_1a88d9b6cccb4f61cb2935428c576dd35e" kind="variable"><name>count</name></member>
+    <member refid="namespacecontroller__pub_1ac906e9318d4d65c577dde1f1b932950a" kind="function"><name>callback</name></member>
+    <member refid="namespacecontroller__pub_1ac2095f825a14c189c0284806b25956b9" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="namespacecontroller__sub" kind="namespace"><name>controller_sub</name>
+    <member refid="controller__sub_8py_1af448c889e029d32507f690174c3c2f30" kind="variable"><name>MOVE</name></member>
+    <member refid="controller__sub_8py_1adc0929008ad4be86f668049f54651945" kind="function"><name>callback</name></member>
+    <member refid="controller__sub_8py_1a3cde4c26b577cfd2a979894930822fc5" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="namespacecreate__map__pub" kind="namespace"><name>create_map_pub</name>
+    <member refid="namespacecreate__map__pub_1a6d288189cb9cc5c85637c3c6b94ad249" kind="variable"><name>endmap</name></member>
+    <member refid="namespacecreate__map__pub_1a05833d72bf50330dd8287efa907ac4b7" kind="function"><name>talker</name></member>
+  </compound>
+  <compound refid="namespacecreate__map__sub" kind="namespace"><name>create_map_sub</name>
+    <member refid="create__map__sub_8py_1abc2065651ea0d0edc6107d7af6d6804b" kind="variable"><name>ENDMAP</name></member>
+    <member refid="create__map__sub_8py_1a8f97ad56a4c3bc088ec86834cefd276c" kind="function"><name>callback</name></member>
+    <member refid="create__map__sub_8py_1a8c86b83a1c98c918d2be82cbc74a899d" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="namespacemy__state__machine" kind="namespace"><name>my_state_machine</name>
+    <member refid="namespacemy__state__machine_1a26dcebeb2ccae1a0b9ba8916249dd8f5" kind="variable"><name>BATTERY_LOW</name></member>
+    <member refid="namespacemy__state__machine_1a5d80a963edb811c55f8e6f6b8fb20a6d" kind="variable"><name>END_MAP</name></member>
+    <member refid="namespacemy__state__machine_1adb1c248d196846cfc6ab61b1a12127c0" kind="variable"><name>PLAN_OK</name></member>
+    <member refid="namespacemy__state__machine_1a8abba5b9214046cb279abf1b9366a757" kind="variable"><name>ARRIVED</name></member>
+    <member refid="namespacemy__state__machine_1a87d556df65d29ac4455cf1a561aa64a3" kind="variable"><name>END_TIME</name></member>
+    <member refid="namespacemy__state__machine_1a2d87d1cbaa579d0f2658096c522c18f6" kind="variable"><name>BATTERY_OK</name></member>
+    <member refid="namespacemy__state__machine_1a46772979202eb2d3ed1bd5ed2064784f" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="namespaceplanner__pub" kind="namespace"><name>planner_pub</name>
+    <member refid="namespaceplanner__pub_1aa3a653f934e495f3783b1cfff29ed412" kind="variable"><name>urgent_array</name></member>
+    <member refid="namespaceplanner__pub_1abe5b437e83704e09b7db339e284667bf" kind="function"><name>talker</name></member>
+  </compound>
+  <compound refid="namespaceplanner__sub1" kind="namespace"><name>planner_sub1</name>
+    <member refid="planner__sub1_8py_1a210bb56a0ead48bed52f1a2b77f28bd3" kind="variable"><name>PLANDONE</name></member>
+    <member refid="planner__sub1_8py_1a2136b04d848bd69707b02cc2b36321bb" kind="function"><name>callback</name></member>
+    <member refid="planner__sub1_8py_1ade2aec37d5a11d597ce9b03d2c3921fd" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="namespaceplanner__sub2" kind="namespace"><name>planner_sub2</name>
+    <member refid="planner__sub2_8py_1a0e89ce311d55cbd52ea0874dff8550c1" kind="function"><name>callback</name></member>
+    <member refid="planner__sub2_8py_1a3eb8be7252535e21703eafe3f8bdb2d4" kind="function"><name>listener</name></member>
+  </compound>
+  <compound refid="index_8rst_8txt" kind="file"><name>index.rst.txt</name>
+    <member refid="index_8rst_8txt_1a5799c429cb0fbfd0b937d7922b426e08" kind="variable"><name>file</name></member>
+    <member refid="index_8rst_8txt_1a660b7b2bbe55a8f319e7fe94cba0722b" kind="variable"><name>Nov</name></member>
+  </compound>
+  <compound refid="_c_make_lists_8txt" kind="file"><name>CMakeLists.txt</name>
+  </compound>
+  <compound refid="conf_8py" kind="file"><name>conf.py</name>
+  </compound>
+  <compound refid="battery__low__publisher_8py" kind="file"><name>battery_low_publisher.py</name>
+  </compound>
+  <compound refid="battery__low__sub_8py" kind="file"><name>battery_low_sub.py</name>
+  </compound>
+  <compound refid="controller__pub_8py" kind="file"><name>controller_pub.py</name>
+  </compound>
+  <compound refid="controller__sub_8py" kind="file"><name>controller_sub.py</name>
+  </compound>
+  <compound refid="create__map__pub_8py" kind="file"><name>create_map_pub.py</name>
+  </compound>
+  <compound refid="create__map__sub_8py" kind="file"><name>create_map_sub.py</name>
+  </compound>
+  <compound refid="my__state__machine_8py" kind="file"><name>my_state_machine.py</name>
+  </compound>
+  <compound refid="planner__pub_8py" kind="file"><name>planner_pub.py</name>
+  </compound>
+  <compound refid="planner__sub1_8py" kind="file"><name>planner_sub1.py</name>
+  </compound>
+  <compound refid="planner__sub2_8py" kind="file"><name>planner_sub2.py</name>
+  </compound>
+  <compound refid="dir_45b9293d3daaa82c00b5908f14ebb805" kind="dir"><name>_build</name>
+  </compound>
+  <compound refid="dir_02bdb4005edb5055ba0ef39c3e2b4a3d" kind="dir"><name>_build/html/_sources</name>
+  </compound>
+  <compound refid="dir_63358181ce567149a79d24bdd45b3e93" kind="dir"><name>_build/html</name>
+  </compound>
+  <compound refid="dir_53e6fa9553ac22a5646d2a2b2d7b97a1" kind="dir"><name>scripts</name>
+  </compound>
+</doxygenindex>

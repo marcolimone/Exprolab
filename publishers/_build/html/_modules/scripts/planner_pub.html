@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.planner_pub &mdash; FSM_Robot_Assognment_1 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> FSM_Robot_Assognment_1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FSM_Robot_Assognment_1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scripts.planner_pub</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.planner_pub</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: planner</span>
+<span class="sd">   :platform: Unix</span>
+<span class="sd">   :synopsis: Python module for planning</span>
+<span class="sd">.. moduleauthor:: Marco Limone</span>
+<span class="sd"> </span>
+<span class="sd">This node make the plan to know where te robot have to go</span>
+
+
+<span class="sd">Publisher to:</span>
+
+<span class="sd"> /planner</span>
+<span class="sd"> /planner_string</span>
+<span class="sd"> </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">armor_msgs.msg</span> <span class="kn">import</span> <span class="n">ArmorDirectiveReq</span><span class="p">,</span> <span class="n">ArmorDirectiveRes</span>
+<span class="kn">from</span> <span class="nn">armor_api.armor_client</span> <span class="kn">import</span> <span class="n">ArmorClient</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">realpath</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+ 
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">message sent at the and of the planning</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">urgent_array</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+
+<div class="viewcode-block" id="talker"><a class="viewcode-back" href="../../index.html#scripts.planner_pub.talker">[docs]</a><span class="k">def</span> <span class="nf">talker</span><span class="p">():</span>
+    
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    In this function are done some query to understund which is the room where te robot has to go:</span>
+<span class="sd">    -query to know witch room Robot1 &quot;canReach&quot;</span>
+<span class="sd">    -query to know the CLASSes of the reachble rooms to know if there are URGENT rooms, is done in a for loop that depend on the lenght of the response array of reachble rooms</span>
+<span class="sd">    for every query there are some string manipulations to adapt messages to the args of the querys</span>
+<span class="sd">    </span>
+<span class="sd">    there are to publishers:</span>
+<span class="sd">    /planner that publish a boolean that will be read from the state machine</span>
+<span class="sd">    /planner_string that publish a string with the room to reach that wiil be read from the controll node</span>
+<span class="sd">    </span>
+<span class="sd">    before publish the two value a check is done to know how much URGENT room there are. if there is only a URGENT room is send this one, if the URGENT roooms are 0 or more than 1 there is a random choice.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">plan_done</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    message sent at the and of the planning</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">pub1</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;planner&#39;</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">pub2</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;planner_string&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;/../&quot;</span>
+    
+   
+    
+    <span class="n">client</span> <span class="o">=</span> <span class="n">ArmorClient</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+    
+    <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;LOCATION&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;ROOM&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;DOOR&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;CORRIDOR&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;URGENT&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">sync_buffered_reasoner</span><span class="p">()</span>
+    
+    
+    
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span> 
+	
+        <span class="n">urgent_array</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">sync_buffered_reasoner</span><span class="p">()</span>
+        <span class="n">can_reach</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">objectprop_b2_ind</span><span class="p">(</span><span class="s2">&quot;canReach&quot;</span><span class="p">,</span> <span class="s2">&quot;Robot1&quot;</span><span class="p">)</span>
+        <span class="n">number</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">can_reach</span><span class="p">)</span>
+        <span class="n">urgent_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">can_reach</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">number</span><span class="p">):</span>
+            <span class="n">can_reach</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">can_reach</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">32</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">can_reach</span><span class="p">)</span>      
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">number</span><span class="p">):</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">class_b2_ind</span><span class="p">(</span><span class="n">can_reach</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span>  
+            <span class="n">classes_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">classes_len</span><span class="p">)</span>
+            
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">can_reach</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">classes_len</span><span class="p">):</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;URGENT&quot;</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> 
+                <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                   <span class="n">urgent_array</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                   <span class="n">urgent_count</span> <span class="o">=</span> <span class="n">urgent_count</span> <span class="o">+</span><span class="mi">1</span>
+        
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">urgent_array</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">urgent_count</span><span class="p">)</span>
+        <span class="c1">#urgent_rooms = np.empty(shape=urgent_count)</span>
+        <span class="n">urgent_rooms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">urgent_array</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">urgent_array</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+               <span class="c1">#urgent_rooms[m] = can_reach[m]</span>
+               <span class="n">urgent_rooms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">can_reach</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+        
+        
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">urgent_rooms</span><span class="p">)</span>  
+        
+        <span class="k">if</span> <span class="n">urgent_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        
+           <span class="n">chosed_room</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">urgent_rooms</span><span class="p">)</span>  
+           <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;choosed room is&quot;</span> <span class="o">+</span> <span class="n">chosed_room</span><span class="p">)</span> 
+           <span class="n">message</span> <span class="o">=</span> <span class="n">chosed_room</span>
+           
+        <span class="k">else</span><span class="p">:</span>
+           <span class="n">chosed_room</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">can_reach</span><span class="p">)</span>  
+           <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;choosed room is&quot;</span> <span class="o">+</span> <span class="n">chosed_room</span><span class="p">)</span> 
+           <span class="n">message</span> <span class="o">=</span> <span class="n">chosed_room</span> 
+        
+        <span class="n">room</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">objectprop_b2_ind</span><span class="p">(</span><span class="s2">&quot;isIn&quot;</span><span class="p">,</span> <span class="s2">&quot;Robot1&quot;</span><span class="p">)</span> 
+        <span class="n">room</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">32</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/battery_flag&quot;</span><span class="p">)</span>
+        
+        
+        <span class="k">while</span> <span class="n">room</span> <span class="o">!=</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+           <span class="n">flag</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/battery_flag&quot;</span><span class="p">)</span>
+           <span class="n">room</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">objectprop_b2_ind</span><span class="p">(</span><span class="s2">&quot;isIn&quot;</span><span class="p">,</span> <span class="s2">&quot;Robot1&quot;</span><span class="p">)</span> 
+           <span class="n">room</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">32</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>     
+           <span class="c1">#rospy.loginfo(message)</span>
+           <span class="n">pub1</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">plan_done</span><span class="p">)</span>
+           <span class="c1">#rospy.loginfo(&quot;send ok&quot;)</span>
+           <span class="n">pub2</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+           <span class="c1">#rospy.loginfo(&quot;send plan&quot;)</span>
+           <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">apply_buffered_changes</span><span class="p">()</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">sync_buffered_reasoner</span><span class="p">()</span></div>
+        <span class="c1">#client.utils.save_ref_with_inferences(path + &quot;topological_map.owl&quot;)</span>
+    	   
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">talker</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marco Limone.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

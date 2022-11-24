@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="dir_53e6fa9553ac22a5646d2a2b2d7b97a1" kind="dir">
+    <compoundname>scripts</compoundname>
+    <innerfile refid="battery__low__publisher_8py">battery_low_publisher.py</innerfile>
+    <innerfile refid="battery__low__sub_8py">battery_low_sub.py</innerfile>
+    <innerfile refid="controller__pub_8py">controller_pub.py</innerfile>
+    <innerfile refid="controller__sub_8py">controller_sub.py</innerfile>
+    <innerfile refid="create__map__pub_8py">create_map_pub.py</innerfile>
+    <innerfile refid="create__map__sub_8py">create_map_sub.py</innerfile>
+    <innerfile refid="my__state__machine_8py">my_state_machine.py</innerfile>
+    <innerfile refid="planner__pub_8py">planner_pub.py</innerfile>
+    <innerfile refid="planner__sub1_8py">planner_sub1.py</innerfile>
+    <innerfile refid="planner__sub2_8py">planner_sub2.py</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="scripts/"/>
+  </compounddef>
+</doxygen>
