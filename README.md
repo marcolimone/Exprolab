@@ -9,8 +9,10 @@ For this assignment we have to simulate the presence of a robot in an indoor env
 For the dowload and installation of this assignment the user need to go in the *src* folder of his workspace and use the following command:
 - git clone https://github.com/marcolimone/Exprolab.git
 
-Then to run the code need to run a launch file that start all the node and the state machine:
-- roslaunch publishers 
+Then you need to substiutte the armor_py_api folder presento in the armor folder, with the one present in the repository because some function were added and used in the scripts 
+
+In the end to run the code you need to run a launch file, present in the launch folder of the publishers folder, that start all the node and the state machine:
+- roslaunch publishers nodes_launcher.launch 
 
 
 ## Commented code
