@@ -18,7 +18,7 @@ In the end to run the code you need to run a launch file, present in the launch 
 ## Commented code
 
 ![Screenshot](FSM.png)
-![Screenshot](Component_Diagram.jpeg)
+![Screenshot](Component_Diagram.jpg)
 
 
 ## Working hypothesis and environment
