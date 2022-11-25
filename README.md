@@ -15,7 +15,7 @@ In the end to run the code you need to run a launch file, present in the launch 
 - roslaunch publishers nodes_launcher.launch 
 
 
-## Commented code
+## Structure of the code
 
 ![Screenshot](FSM.png)
 
@@ -37,6 +37,12 @@ The state machine is a part of the architecture. It is supported by four nodes t
 - Battery low node: this node is contained in the *battery_low_pub.py* file and is used for battery management. The battery is managed by a counter that decreases during the discharge phase and increases during the charge phase, with two different speeds (the discharge speed is faster than the charge one). Furthermore, when the counter (battery) falls below a certain treshold, a message is sent that will allow the state machine to enter the Recharge state to allow charging, when the battery is fully charged a message will be sent that will allow the state machine to exit from the charging status. The treshold is set to 20% of the battery so that the robot has the necessary battery to move into the charging room. The mode of the counter, increasing or decreasing, is managed by the flag *battery_flag*, taken from the parameter server, that is 1 in any state of the state machine, and is set to 0 only during the reload phase.
 - Planner node: planner node is managed by the "planner_pub.py" file. Here, through the API interface, the status of the robot and the ontology are queried: which are the reachable areas, of which are urgent. On the basis of the answers obtained, a room to be reached is chosen. After this choice has been made, two messages are published on two different topics, one boolean that will be read by the state machine and will be used to exit the Planner state, the other message contains the room to reach and will be read by the controller node.
 - Controller node: controller node simulates the movement of the robot using a sleep. In this node, all the manipulations necessary for moving the robot from one room to another are made. This is done by communicating with Armor via the API interface, in particular the position of the robot in the ontology, and the timestamps of the robot and new room are changed. Finally, a message is published which will be used by the state machine to pass from the Controller state to the Wait state.
+
+### Notes
+- note on the visualization of the virtual machine: since the planner always has the plan ready, it often enters and exits the state very quickly, so as not to see the transition graphically. To have effective feedback on the transition to the planner state, just go and check the FSM terminal which displays the transitions that take place.
+
+- note on the planner: when the robot is in charging mode the planner can't publish its plan before the battery is not fully charged, so it try to make a new plan every time, infact in its terminal we can see a lot of very quick messages for that. 
+
 
 Some design choices were made on the basis of some assumptions:
 - for the Wait node a node has not been made to manage the state, but everything is executed in the execute of the same because what happens in the Wait state does not need to be carried out also during other states, but only in the Wait state
