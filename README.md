@@ -16,10 +16,12 @@ In the end to run the code you need to run a launch file, present in the launch 
 
 
 ## Structure of the code
+In this section, the diagram related to the structure of the FSM and the Component Diagram are presented. Also in the repository there is an explanatory video of the operation.
 
+### FSM structure
 ![Screenshot](FSM.png)
 
-
+### 
 ![Screenshot](Component_Diagram.png)
 
 
