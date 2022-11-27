@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespacecontroller__pub" kind="namespace" language="Python">
+    <compoundname>controller_pub</compoundname>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="namespacecontroller__pub_1a88d9b6cccb4f61cb2935428c576dd35e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int controller_pub.count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <initializer>=  0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/controller_pub.py" line="35" column="1" bodyfile="scripts/controller_pub.py" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namespacecontroller__pub_1ac906e9318d4d65c577dde1f1b932950a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def controller_pub.callback</definition>
+        <argsstring>(msg)</argsstring>
+        <name>callback</name>
+        <param>
+          <type>msg</type>
+          <defname>msg</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>This function that is a subscriber callback there is the manipulation of the robot position using the object property &quot;isIn&quot;
+than there is the update of timestamps for Robot1 and the new reached room  using rispectively the object property &quot;now&quot; and &quot;visitedAt&quot;
+in this function are import library &quot;datetime&quot; and &quot;calender&quot; to know the actual date and convert it in UNIX timestamp
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/controller_pub.py" line="40" column="1" bodyfile="scripts/controller_pub.py" bodystart="40" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacecontroller__pub_1ac2095f825a14c189c0284806b25956b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def controller_pub.listener</definition>
+        <argsstring>()</argsstring>
+        <name>listener</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>This function is used to initialize the subscriber
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/controller_pub.py" line="111" column="1" bodyfile="scripts/controller_pub.py" bodystart="111" bodyend="122"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><verbatim>.. module:: controller
+   :platform: Unix
+   :synopsis: Python module for controll
+.. moduleauthor:: Marco Limone
+ 
+This node make the plan to controll the movements of the robot and publish when the robot is arrived
+
+Param:
+ /controller_flag to controll the activation of the controller node
+
+Subscribe to:
+ /planner_string
+
+Publisher to:
+
+ /controller</verbatim> </para>
+    </detaileddescription>
+    <location file="scripts/controller_pub.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

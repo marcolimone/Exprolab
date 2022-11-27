@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespaceplanner__sub2" kind="namespace" language="Python">
+    <compoundname>planner_sub2</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="planner__sub2_8py_1a0e89ce311d55cbd52ea0874dff8550c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def planner_sub2.callback</definition>
+        <argsstring>(msg)</argsstring>
+        <name>callback</name>
+        <param>
+          <type>msg</type>
+          <defname>msg</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/planner_sub2.py" line="8" column="1" bodyfile="scripts/planner_sub2.py" bodystart="8" bodyend="13"/>
+      </memberdef>
+      <memberdef kind="function" id="planner__sub2_8py_1a3eb8be7252535e21703eafe3f8bdb2d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def planner_sub2.listener</definition>
+        <argsstring>()</argsstring>
+        <name>listener</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/planner_sub2.py" line="14" column="1" bodyfile="scripts/planner_sub2.py" bodystart="14" bodyend="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="scripts/planner_sub2.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

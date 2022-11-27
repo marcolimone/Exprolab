@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespaceplanner__pub" kind="namespace" language="Python">
+    <compoundname>planner_pub</compoundname>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="namespaceplanner__pub_1aa3a653f934e495f3783b1cfff29ed412" prot="public" static="no" mutable="no">
+        <type>list</type>
+        <definition>list planner_pub.urgent_array</definition>
+        <argsstring></argsstring>
+        <name>urgent_array</name>
+        <initializer>=  [False, False, False, False]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/planner_pub.py" line="34" column="1" bodyfile="scripts/planner_pub.py" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namespaceplanner__pub_1abe5b437e83704e09b7db339e284667bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def planner_pub.talker</definition>
+        <argsstring>()</argsstring>
+        <name>talker</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>In this function are done some query to understund which is the room where te robot has to go:
+-query to know witch room Robot1 &quot;canReach&quot;
+-query to know the CLASSes of the reachble rooms to know if there are URGENT rooms, is done in a for loop that depend on the lenght of the response array of reachble rooms
+for every query there are some string manipulations to adapt messages to the args of the querys
+
+there are to publishers:
+/planner that publish a boolean that will be read from the state machine
+/planner_string that publish a string with the room to reach that wiil be read from the controll node
+
+before publish the two value a check is done to know how much URGENT room there are. if there is only a URGENT room is send this one, if the URGENT roooms are 0 or more than 1 there is a random choice.
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/planner_pub.py" line="36" column="1" bodyfile="scripts/planner_pub.py" bodystart="36" bodyend="146"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><verbatim>.. module:: planner
+   :platform: Unix
+   :synopsis: Python module for planning
+.. moduleauthor:: Marco Limone
+ 
+This node make the plan to know where te robot have to go
+
+
+Publisher to:
+
+ /planner
+ /planner_string</verbatim> </para>
+    </detaileddescription>
+    <location file="scripts/planner_pub.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

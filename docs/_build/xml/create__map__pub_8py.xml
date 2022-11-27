@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="create__map__pub_8py" kind="file" language="Python">
+    <compoundname>create_map_pub.py</compoundname>
+    <innernamespace refid="namespacecreate__map__pub">create_map_pub</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="namespacecreate__map__pub" refkind="compound"><highlight class="comment">#!/usr/bin/env<sp/>python</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="stringliteral">&quot;&quot;&quot;</highlight></codeline>
+<codeline lineno="4"><highlight class="stringliteral">..<sp/>module::<sp/>create_map</highlight></codeline>
+<codeline lineno="5"><highlight class="stringliteral"><sp/><sp/><sp/>:platform:<sp/>Unix</highlight></codeline>
+<codeline lineno="6"><highlight class="stringliteral"><sp/><sp/><sp/>:synopsis:<sp/>Python<sp/>module<sp/>for<sp/>the<sp/>creation<sp/>of<sp/>the<sp/>map</highlight></codeline>
+<codeline lineno="7"><highlight class="stringliteral">..<sp/>moduleauthor::<sp/>Marco<sp/>Limone</highlight></codeline>
+<codeline lineno="8"><highlight class="stringliteral"><sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="stringliteral">This<sp/>node<sp/>create<sp/>the<sp/>ontology<sp/>of<sp/>a<sp/>map<sp/>then<sp/>publish<sp/>when<sp/>it<sp/>has<sp/>done</highlight></codeline>
+<codeline lineno="10"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="11"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="12"><highlight class="stringliteral">Publisher<sp/>to:</highlight></codeline>
+<codeline lineno="13"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="14"><highlight class="stringliteral"><sp/>/send_map</highlight></codeline>
+<codeline lineno="15"><highlight class="stringliteral"><sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="stringliteral">&quot;&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>rospy</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>time</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>datetime</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>calendar</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>std_msgs.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Bool</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>armor_msgs.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>ArmorDirectiveReq,<sp/>ArmorDirectiveRes</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>armor_api.armor_client<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>ArmorClient</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>os.path<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>dirname,<sp/>realpath</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal">endmap<sp/>=<sp/></highlight><highlight class="keyword">True</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="stringliteral">&apos;&apos;&apos;</highlight></codeline>
+<codeline lineno="32"><highlight class="stringliteral">message<sp/>sent<sp/>after<sp/>the<sp/>building<sp/>of<sp/>the<sp/>map</highlight></codeline>
+<codeline lineno="33"><highlight class="stringliteral">&apos;&apos;&apos;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespacecreate__map__pub_1a05833d72bf50330dd8287efa907ac4b7" kindref="member">talker</ref>():</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&apos;&apos;&apos;</highlight></codeline>
+<codeline lineno="38"><highlight class="stringliteral"><sp/><sp/><sp/><sp/>This<sp/>function<sp/>create<sp/>the<sp/>ontology<sp/>using<sp/>API<sp/>commands,<sp/>then<sp/>publish<sp/>a<sp/>message<sp/>when<sp/>it<sp/>has<sp/>finish<sp/></highlight></codeline>
+<codeline lineno="39"><highlight class="stringliteral"><sp/><sp/><sp/><sp/>-client<sp/>is<sp/>a<sp/>variable<sp/>of<sp/>type<sp/>ArmorClient<sp/>that<sp/>include<sp/>all<sp/>the<sp/>method<sp/>to<sp/>make<sp/>correctly<sp/>the<sp/>call<sp/>to<sp/>Armor<sp/>server</highlight></codeline>
+<codeline lineno="40"><highlight class="stringliteral"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="41"><highlight class="stringliteral"><sp/><sp/><sp/><sp/>&apos;&apos;&apos;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>pub<sp/>=<sp/>rospy.Publisher(</highlight><highlight class="stringliteral">&apos;send_map&apos;</highlight><highlight class="normal">,<sp/>Bool,<sp/>queue_size=10)</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.init_node(</highlight><highlight class="stringliteral">&apos;client&apos;</highlight><highlight class="normal">,<sp/>anonymous=</highlight><highlight class="keyword">True</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>path<sp/>=<sp/>dirname(realpath(__file__))</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>path<sp/>=<sp/>path<sp/>+</highlight><highlight class="stringliteral">&quot;/../&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>client<sp/>=<sp/>ArmorClient(</highlight><highlight class="stringliteral">&quot;client&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;reference&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>client.utils.load_ref_from_file(path<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;topological_map.owl&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;http://bnc/exp-rob-lab/2022-23&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">True</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;PELLET&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">True</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">False</highlight><highlight class="normal">)<sp/><sp/></highlight><highlight class="comment">#<sp/>initializing<sp/>with<sp/>buffered<sp/>manipulation<sp/>and<sp/>reasoning</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>client.utils.mount_on_ref()</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>client.utils.set_log_to_terminal(</highlight><highlight class="keyword">True</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;E&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D5&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;E<sp/>ha<sp/>D5&apos;</highlight><highlight class="normal">)<sp/></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;E&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D6&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;E<sp/>ha<sp/>D6&apos;</highlight><highlight class="normal">)<sp/></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D1&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C1<sp/>ha<sp/>D1&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D2&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C1<sp/>ha<sp/>D2&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D5&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C1<sp/>ha<sp/>D5&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D7&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C1<sp/>ha<sp/>D7&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D3&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C2<sp/>ha<sp/>D3&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D4&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C2<sp/>ha<sp/>D4&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D6&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C2<sp/>ha<sp/>D6&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D7&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;C2<sp/>ha<sp/>D7&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D1&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;R1<sp/>ha<sp/>D1&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D2&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;R2<sp/>ha<sp/>D2&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R3&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D3&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;R3<sp/>ha<sp/>D3&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;hasDoor&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R4&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;D4&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;R4<sp/>ha<sp/>D4&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.disj_inds_of_class(</highlight><highlight class="stringliteral">&apos;LOCATION&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.disj_inds_of_class(</highlight><highlight class="stringliteral">&apos;ROOM&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.disj_inds_of_class(</highlight><highlight class="stringliteral">&apos;DOOR&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.disj_inds_of_class(</highlight><highlight class="stringliteral">&apos;CORRIDOR&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.disj_inds_of_class(</highlight><highlight class="stringliteral">&apos;URGENT&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;disjoint&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>date<sp/>=<sp/>datetime.datetime.utcnow()</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>utc_time<sp/>=<sp/>calendar.timegm(date.utctimetuple())</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>new_time<sp/>=<sp/>str(utc_time)</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&quot;new<sp/>time<sp/>is:&quot;</highlight><highlight class="normal"><sp/>+<sp/>new_time)</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;E&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;C2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R2&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R3&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_dataprop_to_ind(</highlight><highlight class="stringliteral">&quot;visitedAt&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;R4&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Long&quot;</highlight><highlight class="normal">,<sp/>new_time)</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>client.manipulation.add_objectprop_to_ind(</highlight><highlight class="stringliteral">&quot;isIn&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Robot1&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;E&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;Robot<sp/>in<sp/>E&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>client.utils.apply_buffered_changes()</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>client.utils.sync_buffered_reasoner()</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>i<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#client.utils.save_ref_with_inferences(path<sp/>+<sp/>&quot;topological_map.owl&quot;)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>i<sp/>&lt;=<sp/>5:</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pub.publish(endmap)</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;sended<sp/>map&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>time.sleep(1)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i<sp/>=<sp/>i+1</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">not</highlight><highlight class="normal"><sp/>rospy.is_shutdown():<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&apos;end<sp/>process&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>time.sleep(30)</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>__name__<sp/>==<sp/></highlight><highlight class="stringliteral">&apos;__main__&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">try</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespacecreate__map__pub_1a05833d72bf50330dd8287efa907ac4b7" kindref="member">talker</ref>()</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">except</highlight><highlight class="normal"><sp/>rospy.ROSInterruptException:</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">pass</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+    </programlisting>
+    <location file="scripts/create_map_pub.py"/>
+  </compounddef>
+</doxygen>
