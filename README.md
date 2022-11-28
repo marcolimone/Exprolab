@@ -19,7 +19,7 @@ In the node's script there are some commented line that are used to debug the co
 
 
 ## Structure of the code
-In this section, the diagram related to the structure of the FSM and the Component Diagram are presented. Also in the repository there is an explanatory video of the operation: *behaviour_video.gif*.
+In this section, the diagram related to the structure of the FSM and the Component Diagram are presented. Also in the repository there is an explanatory video of the operation: *behaviour_video.gif*. At this link you can find the documentation: https://marcolimone.github.io/Exprolab/
 
 ### FSM structure
 ![Screenshot](FSM.png)
