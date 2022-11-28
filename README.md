@@ -14,6 +14,9 @@ Then you need to substiutte the armor_py_api folder presento in the armor folder
 In the end to run the code you need to run a launch file, present in the launch folder of the publishers folder, that start all the node and the state machine:
 - roslaunch publishers nodes_launcher.launch 
 
+Note that in the publishers folder there are also some simple subscriber to test individually the nodes.
+In the node's script there are some commented line that are used to debug the code.
+
 
 ## Structure of the code
 In this section, the diagram related to the structure of the FSM and the Component Diagram are presented. Also in the repository there is an explanatory video of the operation: *behaviour_video.gif*.
