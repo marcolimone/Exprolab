@@ -29,7 +29,7 @@ In this section, the diagram related to the structure of the FSM and the Compone
 
 
 ## Working hypothesis and environment
-### System’s features and assumption
+### System’s features
 The state machine has been designed on 5 states:
 - Send Map: state that runs only once at the beginning. In this state the state machine waits for the map to be created in the ontology, as soon as the ontology is       completed, the state machine will receive the message *end_map* will allow the transition to the next state.
 - Planner: in this state the state machine waits until the planner decides which room to reach next. Once the room has been chosen, the state machine will receive the *chosen_room* message which will allow the transition to the next state.
@@ -48,7 +48,7 @@ The state machine is a part of the architecture. It is supported by four nodes t
 
 - note on the planner: when the robot is in charging mode the planner can't publish its plan before the battery is not fully charged, so it try to make a new plan every time, infact in its terminal we can see a lot of very quick messages for that. 
 
-
+### Assumption
 Some design choices were made on the basis of some assumptions:
 - for the Wait node a node has not been made to manage the state, but everything is executed in the execute of the same because what happens in the Wait state does not need to be carried out also during other states, but only in the Wait state
 - the battery management node sends the message continuously until the state machine enters the Recharge state, to prevent the message from being lost. The manage of the *battery_flag* is managed by the FMS to maintain a certain level of centralization and control by the FSM
