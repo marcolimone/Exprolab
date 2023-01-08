@@ -29,6 +29,8 @@ In the node's script there are some commented line that are used to debug the co
 ## Structure of the code
 The code is structured as the previous assignment with the difference that now we use gazebo to simulate the robot, a script where the robot model is defined and we use move_base to have the planning of robot movement, and gmapping to map the enviroment. Moreover there is a marker detect node that allow the detection of the markers (this node was already given) and a server (also already given)that given in input the markers ID, give us back the information to create the map.
 
+At this link there is the documentation: https://marcolimone.github.io/Exprolab/
+
 
 ## Working hypothesis and environment
 ### System’s features
