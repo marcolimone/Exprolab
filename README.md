@@ -14,7 +14,7 @@ For the dowload and installation of this assignment the user need to go in the *
 - Update the assignment_2 folder with the one present in the repository
 - Add the files "assignment_robot.gazebo" and "assignment_robot.xacro" to the *urdf* folder of the *robot_urdf* folder
 - Add the file "motors_config_ass,yaml" to the *config* folder of the *robot_urdf* folder
-- Take the "param" folder in te repository and sobstitute the param one in the planning folder
+- Take the "param" folder in the repository and sobstitute the param one in the *planning* folder
 - Sobstitute the file "gmapping.launch" with the one present in the *launch* folder of the *planning* folder
 
 
