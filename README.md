@@ -1,6 +1,6 @@
-# Exprolab Assignment 1 Limone Marco
+# Exprolab Assignment 2 Limone Marco
 ## Aim of the Assignment
-For this assignment we have to simulate the presence of a robot in an indoor environment created through ontology. Through the use of a state machine and external nodes, the robot must be able to move around the various rooms, preferring the most urgent ones and always trying to stay in the corridors after being in a room.
+For this assignment we have to add to the previous one the real simulation of a robot running in a indoor enviroment. I have to create a robot model that can detect markers and can move in the enviroment and map it. 
 
 ##
 
@@ -9,9 +9,10 @@ For this assignment we have to simulate the presence of a robot in an indoor env
 For the dowload and installation of this assignment the user need to go in the *src* folder of his workspace and use the following command:
 - git clone https://github.com/marcolimone/Exprolab.git
 
-Then you need to substiutte the armor_py_api folder presento in the armor folder, with the one present in the repository because some function were added and used in the scripts 
+Then you need to substiutte the armor_py_api folder present in the armor folder, with the one present in the repository because some function were added and used in the scripts 
 
-In the end to run the code you need to run a launch file, present in the launch folder of the publishers folder, that start all the node and the state machine:
+In the end to run the code you need to run two launch file, the first that run the simulation and the second present in the launch folder of the publishers folder, that start all the node and the state machine:
+- roslaunch assignment_2 assignment.launch
 - roslaunch publishers nodes_launcher.launch 
 
 Note that in the publishers folder there are also some simple subscriber to test individually the nodes.
@@ -19,48 +20,36 @@ In the node's script there are some commented line that are used to debug the co
 
 
 ## Structure of the code
-In this section, the diagram related to the structure of the FSM and the Component Diagram are presented. Also in the repository there is an explanatory video of the operation: *behaviour_video.gif*. At this link you can find the documentation: https://marcolimone.github.io/Exprolab/
-
-### FSM structure
-![Screenshot](FSM.png)
-
-### Component Diagram
-![Screenshot](Component_Diagram.png)
+The code is structured as the previous assignment with the difference that now we use gazebo to simulate the robot, a script where the robot model is defined and we use move_base to have the planning of robot movement, and gmapping to map the enviroment. Moreover there is a marker detect node that allow the detection of the markers (this node was already given) and a server (also already given)that given in input the markers ID, give us back the information to create the map.
 
 
 ## Working hypothesis and environment
 ### System’s features
-The state machine has been designed on 5 states:
-- Send Map: state that runs only once at the beginning. In this state the state machine waits for the map to be created in the ontology, as soon as the ontology is       completed, the state machine will receive the message *end_map* will allow the transition to the next state.
-- Planner: in this state the state machine waits until the planner decides which room to reach next. Once the room has been chosen, the state machine will receive the *chosen_room* message which will allow the transition to the next state.
-- Controller: the controller state has been designed to simulate the movement of the robot from one room to another (the actual movement is actually instantaneous). When the state machine gets the *arrived* message, it will change the state.
-- Wait: in the wait state it simply waits for the time when the robot stops in the room just reached to end.
-- Recharge: the state machine moves into this state to allow the robot to recharge before it discharges. This state can be reached from any other state (except the send_map state) when the *battery_low* message arrives. This state is exited when the *battery_ok* message arrives.
+The robot that work in the simulation have an arm with four links and joints:
+- a base arm link with a fixed joint that fix the base of the arm to the mobile robot
+- a first link that hava a revolute joint that allow a rotation around z-axis used to rotate the camera around 360 degrees
+- another link that have a revolute joint that allow a rotation around x-axis used to rotate up and down the camera
+- the last link is the camera link that have a fixed joint
 
-The state machine is a part of the architecture. It is supported by four nodes that send messages that the state machine will manage:
-- Create map node: this node is conteined in the *create_map_pub.py* file and is used to create the map in the ontology. The map in the ontology is created by communicating with Armor via the API interface, in particular the relationships between rooms and doors are created, a disjoint is made to create individual individuals, the command is used to place the robot in a specific room and in the end a reason is made to validate all the relations just inserted.
-- Battery low node: this node is contained in the *battery_low_publisher.py* file and is used for battery management. The battery is managed by a counter that decreases during the discharge phase and increases during the charge phase, with two different speeds (the discharge speed is faster than the charge one). Furthermore, when the counter (battery) falls below a certain treshold, a message is sent that will allow the state machine to enter the Recharge state to allow charging, when the battery is fully charged a message will be sent that will allow the state machine to exit from the charging status. The treshold is set to 20% of the battery so that the robot has the necessary battery to move into the charging room. The mode of the counter, increasing or decreasing, is managed by the flag *battery_flag*, taken from the parameter server, that is 1 in any state of the state machine, and is set to 0 only during the reload phase. The battery discharge time is set at around 3 minutes to make operation more realistic and allow the robot to make various movements before discharging. To speed up the discharge, just decrease the sleep time that simulates the discharge. 
-- Planner node: planner node is managed by the *planner_pub.py* file. Here, through the API interface, the status of the robot and the ontology are queried: which are the reachable areas, of which are urgent. On the basis of the answers obtained, a room to be reached is chosen. After this choice has been made, two messages are published on two different topics, one boolean that will be read by the state machine and will be used to exit the Planner state, the other message contains the room to reach and will be read by the controller node.
-- Controller node: controller node, managed by the *controller_pub.py* file, simulates the movement of the robot using a sleep. In this node, all the manipulations necessary for moving the robot from one room to another are made. This is done by communicating with Armor via the API interface, in particular the position of the robot in the ontology, and the timestamps of the robot and new room are changed. Finally, a message is published which will be used by the state machine to pass from the Controller state to the Wait state.
+The idea is to rotate the camera thanks to the first joint to detect the markers, if some marker is lost we add also a rotation of the second revolute joint to see markers that are in an higher position. When the detection fase is end, the map is created on the ontology than there is the planner fase and the controller one.
+Regard the alredy given marker detection node, some modifies were done to allow the publish of the detected ID on the topic *ID_pub*.
+From the first assignment some changes have been made to the nodes:
+- Create map node: before in this script there were only command that comunicate with the API to create the ontology, now there is a subscriber to the publisher *ID_pub* that receive all the detected markers that are put in an array in the callback, than there is a function that allow the rotation of the joint of the robot during the detection fase, than after the detection of all the markers the function take the array with the IDs and start to call the service to have the information that are used to create te map in the ontology. 
+- Controller node: the controller node is very similar to the previous one, with the difference that in the first assignment the movement of the robot was simulated with a time counter, now that we have a real simulation the node subscribe to *odom* to have the actual position of the robot and to estimate the distance between the robot and the goal. When the robot reach the goal all are done all the manipulation of the ontology in the same way as the previous assignment.
+- Wait state: the Wait state is managed in the FSM node, in the first assignment in this state was requested to simply wait some time, now in this state the robot need to turn around the camera to inspect it. 
+- Battery low node: in the first assignment, all the manipulation of the ontology were done in this node when the battery was low, now when the FSM enter in the Recharge state, it raise up the *controller_flag* and send on the same topic of the planner that it have to reach the E room, in this way all the fase of changing room is managed by the controller and when the robot arrive in the room, a flag *arrived_in_E* set to 1 allow the recharge of the battery.
 
 ### Notes
-- note on the visualization of the virtual machine: since the planner always has the plan ready, it often enters and exits the state very quickly, so as not to see the transition graphically. To have effective feedback on the transition to the planner state, just go and check the FSM terminal which displays the transitions that take place.
-
-- note on the planner: when the robot is in charging mode the planner can't publish its plan before the battery is not fully charged, so it try to make a new plan every time, infact in its terminal we can see a lot of very quick messages for that. 
+- note on some problems that sometime occur after the Recharge State: sometimes after the Recharge State when the planner start, the query done to the ontology to have the reacheble room, give back an empty array of reacheble rooms and fails in the choice of the next room to reach. I try to understand what couse the problem, but the only node that interact with the API to modify the ontology is the controller node that in all the other situation work very well. I think could be a problem with the API. 
 
 ### Assumption
 Some design choices were made on the basis of some assumptions:
-- for the Wait node a node has not been made to manage the state, but everything is executed in the execute of the same because what happens in the Wait state does not need to be carried out also during other states, but only in the Wait state
-- the battery management node sends the message continuously until the state machine enters the Recharge state, to prevent the message from being lost. The manage of the *battery_flag* is managed by the FMS to maintain a certain level of centralization and control by the FSM
-- the same thing that happens for the battery low message also happens to the messages sent by the planner and controller, with the difference that in this case the messages will be taken into consideration only if the state machine is in the right state.
-- another assumption made is that the robot can have info only on the neighboring rooms and therefore the planner can choose to reach only those that the query on the robot is on the canReach property returns.
-- an assumption was also made on the request of the assignment relating to the ability of the robot to always return to the corridors after visiting a room. In this case, no specific care has been taken as the rooms are connected only with the corridors, so the latter are always the only environments reachable after being in a room.
-- an important assumption was also made on the *create_map* node. The choice to make the node not very general and not open to various map configurations, is due to the fact that for the next assignment the robot will not have the map but will have to explore in search of information on the map, this means that the type of assembly of the map will be very similar to the one implemented in the aforementioned node, with the difference that the map will not be created completely at the beginning, but will be updated as the robot explores the environment.
-- a final assumption is made on the management of planners and controllers. Both nodes communicate with the FSM via publisher/subscriber. The planner also publishes the room to be reached on a topic, and subsequently the controller reads this message without going through the FSM. This was done to make sure that the controller always has the last plan made by the planner. Furthermore, even if the data is always available, the controller performs its tasks only when the FSM enters the controller state and the *controller_flag* flag is raised, which allows the controller node to perform its tasks. In doing so, control remains in the hands of the FSM.
+- every time that the camera have to rotate in a room, I decide to make it do two turns, one clockwise and one counterclockwise. In this way the position of the joint can return in the 0.0 position. This is to simplify the managing of the joint, and to avoid some problems that occur when was asked to the joint to change its position of some radians all with one command, infact sometimes it start to oscillate and stack in a position.
+- an assumption was made in the markers detection fase, infact knowing that there were 7 markers and the IDs of the markers were between 11 and 17, I decide to discard all detected markers that weren't in this range, and to pass to the next fase where 7 markers where detected. This assumption makes the code less general, but was made to speed up the process for what we need to do.
+- the discharge of the battery was slow down due to the fact that now we have a real robot that need some time to reach the designed room.
 
 ### System’s limitations
-- a limitation may be the one already mentioned relating to the lack of generality of the node that creates the map, which as already said in the future may not be a limitation, but as regards this specific assignment it could be. In fact, having such a structured node would mean that every time you want to use a different map, you have to go and act on the script, or use another ready-made script with the different map (not optimal solution as it would mean having a file for each map).
+- obviously a limitaton is the problem mentioned in the Note section
 
 ### Possible technical Improvements
-- a possible future improvement, especially linked to the next assignment, will be to modify the script related to the creation of the map to meet the needs of the next assignment, and consequently add transitions that from any state bring back to the node for the update of the map whenever the robot acquires information related to the map.
-- another improvement could be related to the Recharge state, infact when the FSM is in this state, the robot go directly in the *E* room even if it is not an adjacent room to the current one. The improvement could be to make a path that the robot have to follow to reach the *E* room.
+- a possible future improvement could the implementation of a better way to detect the markers
