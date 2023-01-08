@@ -15,6 +15,7 @@ Update the assignment_2 folder with the one present in the repository
 Add the files "assignment_robot.gazebo" and "assignment_robot.xacro" to the *urdf* folder of the *robot_urdf* folder
 Add the file "motors_config_ass,yaml" to the *config* folder of the *robot_urdf* folder
 Update the planning folder with the one present in the repository due to some modify done in the "gmapping.launch" and in the files of the "param" folder 
+Put the file "assignment_world.world" in the *world* folder of the *assignment_2* folder
 
 In the end to run the code you need to run two launch file, the first that run the simulation and the second present in the launch folder of the publishers folder, that start all the node and the state machine:
 - roslaunch assignment_2 assignment.launch
