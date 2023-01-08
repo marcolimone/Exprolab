@@ -9,13 +9,14 @@ For this assignment we have to add to the previous one the real simulation of a 
 For the dowload and installation of this assignment the user need to go in the *src* folder of his workspace and use the following command:
 - git clone https: https://github.com/marcolimone/Exprolab.git
 
-Then you need to substiute the armor_py_api folder present in the armor folder, with the one present in the repository because some function were added and used in the scripts. 
-Move the updated marker_publish.cpp script, in the repository, in the aruco_ros folder 
-Update the assignment_2 folder with the one present in the repository
-Add the files "assignment_robot.gazebo" and "assignment_robot.xacro" to the *urdf* folder of the *robot_urdf* folder
-Add the file "motors_config_ass,yaml" to the *config* folder of the *robot_urdf* folder
-Update the planning folder with the one present in the repository due to some modify done in the "gmapping.launch" and in the files of the "param" folder 
-Put the file "assignment_world.world" in the *world* folder of the *assignment_2* folder
+- Then you need to substiute the armor_py_api folder present in the armor folder, with the one present in the repository because some function were added and used in the scripts. 
+- Move the updated "marker_publish.cpp" script, in the repository, in the *aruco_ros* folder 
+- Update the assignment_2 folder with the one present in the repository
+- Add the files "assignment_robot.gazebo" and "assignment_robot.xacro" to the *urdf* folder of the *robot_urdf* folder
+- Add the file "motors_config_ass,yaml" to the *config* folder of the *robot_urdf* folder
+- Take the "param" folder in te repository and sobstitute the param one in the planning folder
+- Sobstitute the file "gmapping.launch" with the one present in the *launch* folder of the *planning* folder
+
 
 In the end to run the code you need to run two launch file, the first that run the simulation and the second present in the launch folder of the publishers folder, that start all the node and the state machine:
 - roslaunch assignment_2 assignment.launch
