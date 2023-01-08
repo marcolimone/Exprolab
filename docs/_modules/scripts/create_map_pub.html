@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.create_map_pub &mdash; FSM_Robot_Assognment_1 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> FSM_Robot_Assognment_1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FSM_Robot_Assognment_1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scripts.create_map_pub</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.create_map_pub</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: create_map</span>
+<span class="sd">   :platform: Unix</span>
+<span class="sd">   :synopsis: Python module for the creation of the map</span>
+<span class="sd">.. moduleauthor:: Marco Limone</span>
+<span class="sd"> </span>
+<span class="sd">This node create the ontology of a map they receive information from markers located in the map. To detect the markers messages are published to rotate the camera. It publish a message when it has done</span>
+
+
+<span class="sd">Publisher to:</span>
+
+<span class="sd"> /send_map</span>
+<span class="sd"> /rob/joint1_position_controller/command</span>
+<span class="sd"> /rob/joint4_position_controller/command</span>
+
+<span class="sd">Service:</span>
+<span class="sd"> /room_info </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">calendar</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">actionlib</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Bool</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Float64</span>
+<span class="kn">from</span> <span class="nn">armor_msgs.msg</span> <span class="kn">import</span> <span class="n">ArmorDirectiveReq</span><span class="p">,</span> <span class="n">ArmorDirectiveRes</span>
+<span class="kn">from</span> <span class="nn">armor_api.armor_client</span> <span class="kn">import</span> <span class="n">ArmorClient</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">realpath</span>
+<span class="kn">from</span> <span class="nn">assignment2.srv</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">endmap</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">message sent after the building of the map</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">id_array</span><span class="o">=</span><span class="nb">list</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">list whith all the detected ID</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">doors</span><span class="o">=</span><span class="nb">list</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">list of doors for each room</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">rotation</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">variable used as message to control the joint that allow the camera rotation</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">n_marker</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">variable to know the number of detected markers</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="rotation_camera"><a class="viewcode-back" href="../../index.html#scripts.create_map_pub.rotation_camera">[docs]</a><span class="k">def</span> <span class="nf">rotation_camera</span><span class="p">():</span>
+    
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function allow the rotation of the camera, than create the map requesting information from the appropriate service</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pub1</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;send_map&#39;</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;rob/joint1_position_controller/command&#39;</span><span class="p">,</span> <span class="n">Float64</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">pub2</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;rob/joint4_position_controller/command&#39;</span><span class="p">,</span> <span class="n">Float64</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">ArmorClient</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+    <span class="k">global</span> <span class="n">id_array</span>
+    <span class="k">global</span> <span class="n">rotation</span>
+    <span class="k">global</span> <span class="n">n_marker</span>
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;/../&quot;</span>
+    
+    <span class="n">rotation_flag</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">up_down</span><span class="o">=</span><span class="mf">0.0</span>
+    
+    <span class="k">while</span> <span class="n">n_marker</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+    
+       <span class="k">if</span> <span class="n">rotation</span> <span class="o">&gt;=</span><span class="mf">6.28</span><span class="p">:</span>
+          <span class="n">rotation_flag</span> <span class="o">=</span> <span class="mi">1</span>
+          <span class="n">up_down</span><span class="o">=</span><span class="mf">0.1</span>
+          <span class="n">pub2</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">up_down</span><span class="p">)</span>
+       <span class="k">elif</span> <span class="n">rotation</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+          <span class="n">rotation_flag</span> <span class="o">=</span> <span class="mi">0</span>  
+          <span class="n">up_down</span><span class="o">=</span><span class="mf">0.0</span> 
+          <span class="n">pub2</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">up_down</span><span class="p">)</span>
+      
+       <span class="k">if</span> <span class="n">rotation_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  
+          <span class="n">rotation</span> <span class="o">=</span> <span class="n">rotation</span> <span class="o">-</span> <span class="mf">0.01</span>
+          <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+          
+       <span class="k">elif</span> <span class="n">rotation_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">rotation</span> <span class="o">=</span> <span class="n">rotation</span> <span class="o">+</span> <span class="mf">0.01</span>
+          <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>  
+       <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+    
+    
+    <span class="k">while</span> <span class="n">rotation</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">:</span>
+          <span class="n">rotation</span> <span class="o">=</span> <span class="n">rotation</span> <span class="o">-</span> <span class="mf">0.01</span>
+          <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  
+    <span class="n">pub2</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">n_marker</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">:</span>
+       <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+       <span class="n">utc_time</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timegm</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">utctimetuple</span><span class="p">())</span>
+       <span class="n">new_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">utc_time</span><span class="p">)</span>
+       <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;new time is:&quot;</span> <span class="o">+</span> <span class="n">new_time</span><span class="p">)</span>
+       <span class="n">info</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;room_info&#39;</span><span class="p">,</span> <span class="n">RoomInformation</span><span class="p">)</span>
+       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_marker</span><span class="p">):</span>
+          <span class="n">resp</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="n">id_array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+          
+          <span class="n">resp_room</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">room</span>
+          <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">add_dataprop_to_ind</span><span class="p">(</span><span class="s2">&quot;visitedAt&quot;</span><span class="p">,</span> <span class="n">resp_room</span><span class="p">,</span> <span class="s2">&quot;Long&quot;</span><span class="p">,</span> <span class="n">new_time</span><span class="p">)</span>
+          <span class="n">x</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">x</span>
+          <span class="n">y</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">y</span>
+          <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">*</span><span class="mi">10</span>
+          <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="mi">10</span>
+          <span class="n">x</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="n">y</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+          
+          <span class="n">x</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="n">y</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+          
+          
+          <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">add_dataprop_to_ind</span><span class="p">(</span><span class="s2">&quot;coordinate_x&quot;</span><span class="p">,</span> <span class="n">resp_room</span><span class="p">,</span> <span class="s2">&quot;Long&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+          <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">add_dataprop_to_ind</span><span class="p">(</span><span class="s2">&quot;coordinate_y&quot;</span><span class="p">,</span> <span class="n">resp_room</span><span class="p">,</span> <span class="s2">&quot;Long&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+          
+          <span class="n">resp_connections</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">connections</span>
+          <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">resp_room</span><span class="p">)</span>
+          <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">resp_connections</span><span class="p">)</span>
+          <span class="n">conn_lenght</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">resp_connections</span><span class="p">)</span>
+          <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">conn_lenght</span><span class="p">)</span>
+          
+          <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">conn_lenght</span><span class="p">):</span>
+              
+              <span class="n">doors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resp_connections</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">through_door</span><span class="p">)</span>
+              <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">add_objectprop_to_ind</span><span class="p">(</span><span class="s2">&quot;hasDoor&quot;</span><span class="p">,</span> <span class="n">resp_room</span><span class="p">,</span> <span class="n">resp_connections</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">through_door</span><span class="p">)</span>
+              
+          
+          <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">doors</span><span class="p">)</span> 
+          <span class="k">del</span> <span class="n">doors</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">conn_lenght</span><span class="p">]</span>
+           
+       
+       
+          
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;LOCATION&#39;</span><span class="p">)</span>
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;ROOM&#39;</span><span class="p">)</span>
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;DOOR&#39;</span><span class="p">)</span>
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;CORRIDOR&#39;</span><span class="p">)</span>
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">disj_inds_of_class</span><span class="p">(</span><span class="s1">&#39;URGENT&#39;</span><span class="p">)</span> 
+       
+       <span class="n">client</span><span class="o">.</span><span class="n">manipulation</span><span class="o">.</span><span class="n">add_objectprop_to_ind</span><span class="p">(</span><span class="s2">&quot;isIn&quot;</span><span class="p">,</span> <span class="s2">&quot;Robot1&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+       
+       <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">apply_buffered_changes</span><span class="p">()</span>
+       <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">sync_buffered_reasoner</span><span class="p">()</span>
+       <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">       client.utils.save_ref_with_inferences(path + &quot;topological_map.owl&quot;)</span>
+<span class="sd">       &#39;&#39;&#39;</span>
+       <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+       <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+          <span class="n">pub1</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">endmap</span><span class="p">)</span>
+          <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s1">&#39;sended map&#39;</span><span class="p">)</span>
+          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+          <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="ID_callback"><a class="viewcode-back" href="../../index.html#scripts.create_map_pub.ID_callback">[docs]</a><span class="k">def</span> <span class="nf">ID_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function take in to account the detected markers and how much they are</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    
+    <span class="k">global</span> <span class="n">n_marker</span>
+    <span class="k">global</span> <span class="n">id_array</span>
+    
+    
+    <span class="n">n_id</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+    
+    <span class="k">if</span> <span class="n">n_id</span><span class="o">&lt;</span><span class="mi">18</span> <span class="ow">and</span> <span class="n">n_id</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">:</span>
+       <span class="n">response</span> <span class="o">=</span> <span class="n">n_id</span> <span class="ow">in</span> <span class="n">id_array</span>
+        
+       <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+          <span class="n">id_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_id</span><span class="p">)</span>
+       <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">       rospy.loginfo(id_array)</span>
+<span class="sd">       &#39;&#39;&#39;</span>
+    
+    <span class="n">n_marker</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">id_array</span><span class="p">)</span></div>
+    
+          
+    
+<span class="k">def</span> <span class="nf">listener</span><span class="p">():</span>
+    
+    
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;/../&quot;</span>
+    
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">ArmorClient</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">load_ref_from_file</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;topological_map.owl&quot;</span><span class="p">,</span> <span class="s2">&quot;http://bnc/exp-rob-lab/2022-23&quot;</span><span class="p">,</span>
+                                <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;PELLET&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>  <span class="c1"># initializing with buffered manipulation and reasoning</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mount_on_ref</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">set_log_to_terminal</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;listener&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">rotation_camera</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rotation&quot;</span><span class="p">)</span>
+    <span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;ID_pub&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">ID_callback</span><span class="p">)</span>
+
+    <span class="c1"># spin() simply keeps python from exiting until this node is stopped</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    
+    
+    <span class="n">listener</span><span class="p">()</span>
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marco Limone.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to FSM_Robot_Assognment_1’s documentation! &mdash; FSM_Robot_Assognment_1 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> FSM_Robot_Assognment_1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to FSM_Robot_Assognment_1’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#module-scripts.my_state_machine">FSM Module</a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Building_map"><code class="docutils literal notranslate"><span class="pre">Building_map</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Building_map.execute"><code class="docutils literal notranslate"><span class="pre">Building_map.execute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Controller"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Controller.execute"><code class="docutils literal notranslate"><span class="pre">Controller.execute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Helper"><code class="docutils literal notranslate"><span class="pre">Helper</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Helper.batterylowCallback"><code class="docutils literal notranslate"><span class="pre">Helper.batterylowCallback()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Helper.buildingmapCallback"><code class="docutils literal notranslate"><span class="pre">Helper.buildingmapCallback()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Helper.controllerCallback"><code class="docutils literal notranslate"><span class="pre">Helper.controllerCallback()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Helper.plannerCallback"><code class="docutils literal notranslate"><span class="pre">Helper.plannerCallback()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Planner"><code class="docutils literal notranslate"><span class="pre">Planner</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Planner.execute"><code class="docutils literal notranslate"><span class="pre">Planner.execute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Recharge"><code class="docutils literal notranslate"><span class="pre">Recharge</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Recharge.execute"><code class="docutils literal notranslate"><span class="pre">Recharge.execute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.Wait"><code class="docutils literal notranslate"><span class="pre">Wait</span></code></a><ul>
+<li><a class="reference internal" href="#scripts.my_state_machine.Wait.execute"><code class="docutils literal notranslate"><span class="pre">Wait.execute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scripts.my_state_machine.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.battery_low_publisher">Battery Low Module</a><ul>
+<li><a class="reference internal" href="#scripts.battery_low_publisher.talker"><code class="docutils literal notranslate"><span class="pre">talker()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.create_map_pub">Create Map Module</a><ul>
+<li><a class="reference internal" href="#scripts.create_map_pub.ID_callback"><code class="docutils literal notranslate"><span class="pre">ID_callback()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.doors"><code class="docutils literal notranslate"><span class="pre">doors</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.endmap"><code class="docutils literal notranslate"><span class="pre">endmap</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.id_array"><code class="docutils literal notranslate"><span class="pre">id_array</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.n_marker"><code class="docutils literal notranslate"><span class="pre">n_marker</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.rotation"><code class="docutils literal notranslate"><span class="pre">rotation</span></code></a></li>
+<li><a class="reference internal" href="#scripts.create_map_pub.rotation_camera"><code class="docutils literal notranslate"><span class="pre">rotation_camera()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.planner_pub">Planner Module</a><ul>
+<li><a class="reference internal" href="#scripts.planner_pub.talker"><code class="docutils literal notranslate"><span class="pre">talker()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.controller_pub">Controller Module</a><ul>
+<li><a class="reference internal" href="#scripts.controller_pub.actual_x"><code class="docutils literal notranslate"><span class="pre">actual_x</span></code></a></li>
+<li><a class="reference internal" href="#scripts.controller_pub.actual_y"><code class="docutils literal notranslate"><span class="pre">actual_y</span></code></a></li>
+<li><a class="reference internal" href="#scripts.controller_pub.callback"><code class="docutils literal notranslate"><span class="pre">callback()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.controller_pub.listener"><code class="docutils literal notranslate"><span class="pre">listener()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.controller_pub.pose_callback"><code class="docutils literal notranslate"><span class="pre">pose_callback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">FSM_Robot_Assognment_1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Welcome to FSM_Robot_Assognment_1’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="welcome-to-fsm-robot-assognment-1-s-documentation">
+<h1>Welcome to FSM_Robot_Assognment_1’s documentation!<a class="headerlink" href="#welcome-to-fsm-robot-assognment-1-s-documentation" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="module-scripts.my_state_machine">
+<span id="fsm-module"></span><h1>FSM Module<a class="headerlink" href="#module-scripts.my_state_machine" title="Permalink to this heading"></a></h1>
+<p>This node run the state machine the execute function of each state describe what happened in each state</p>
+<dl class="simple">
+<dt>Param:</dt><dd><p>/battery_flag to know when the battery have to start to charge or discharge
+/controller_flag to activate and deactivate the controller
+/planner_flag</p>
+</dd>
+</dl>
+<p>Subsciber to:</p>
+<blockquote>
+<div><p>/battery
+/create_map
+/planner
+/controller</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Building_map">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Building_map</span></span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Building_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Building_map" title="Permalink to this definition"></a></dt>
+<dd><p>This class describe what happen when the state machine is in the Building_map state, the state machine exit from this state when the ontology is finish.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Building_map.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Building_map.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Building_map.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Called when executing a state.
+In the base class this raises a NotImplementedError.</p>
+<p>&#64;type ud: L{UserData} structure
+&#64;param ud: Userdata for the scope in which this state is executing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Controller" title="Permalink to this definition"></a></dt>
+<dd><p>This class describe what happen when the state machine is in the Controller state, to exit from this state the robot need to reach the desired room.
+Another way to exit from this state is when arrive the message of battery low.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Controller.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Controller.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Controller.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Called when executing a state.
+In the base class this raises a NotImplementedError.</p>
+<p>&#64;type ud: L{UserData} structure
+&#64;param ud: Userdata for the scope in which this state is executing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Helper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">done_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Helper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Helper" title="Permalink to this definition"></a></dt>
+<dd><p>Class that allow the use of mutex and contain all the callback of the subscribers</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Helper.batterylowCallback">
+<span class="sig-name descname"><span class="pre">batterylowCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Helper.batterylowCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Helper.batterylowCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Args:String return the status of the battery</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Helper.buildingmapCallback">
+<span class="sig-name descname"><span class="pre">buildingmapCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Helper.buildingmapCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Helper.buildingmapCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Args:Bool this value is true when the building of the map is end</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Helper.controllerCallback">
+<span class="sig-name descname"><span class="pre">controllerCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Helper.controllerCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Helper.controllerCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Args:Bool this value is true when the controller node brings the robot in the right room</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Helper.plannerCallback">
+<span class="sig-name descname"><span class="pre">plannerCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Helper.plannerCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Helper.plannerCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Args:Bool this value is true when the planner send a plan</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Planner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Planner</span></span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Planner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Planner" title="Permalink to this definition"></a></dt>
+<dd><p>This class describe what happen when the state machine is in the Planner state, to exit from this state the robot need to choose the room where the robot have to go.
+Another way to exit from this state is when arrive the message of battery low.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Planner.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Planner.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Planner.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Called when executing a state.
+In the base class this raises a NotImplementedError.</p>
+<p>&#64;type ud: L{UserData} structure
+&#64;param ud: Userdata for the scope in which this state is executing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Recharge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Recharge</span></span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Recharge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Recharge" title="Permalink to this definition"></a></dt>
+<dd><p>This class describe what happen when the state machine is in the Recharge state, to exit from this state the robot need to go in a defined room to recharge
+when the battery is full, the state can change</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Recharge.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Recharge.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Recharge.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Called when executing a state.
+In the base class this raises a NotImplementedError.</p>
+<p>&#64;type ud: L{UserData} structure
+&#64;param ud: Userdata for the scope in which this state is executing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Wait">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">Wait</span></span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Wait"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Wait" title="Permalink to this definition"></a></dt>
+<dd><p>This class describe what happen when the state machine is in the Wait state, to exit from this state the robot need turn its camera around, at the end of this motion the state machine can change state.
+Another way to exit from this state is when arrive the message of battery low.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.my_state_machine.Wait.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#Wait.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.Wait.execute" title="Permalink to this definition"></a></dt>
+<dd><p>Called when executing a state.
+In the base class this raises a NotImplementedError.</p>
+<p>&#64;type ud: L{UserData} structure
+&#64;param ud: Userdata for the scope in which this state is executing</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.my_state_machine.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.my_state_machine.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/my_state_machine.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.my_state_machine.main" title="Permalink to this definition"></a></dt>
+<dd><p>This function initialize and run the state machine with its state and its transitions</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.battery_low_publisher">
+<span id="battery-low-module"></span><h1>Battery Low Module<a class="headerlink" href="#module-scripts.battery_low_publisher" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-battery_low"></span><p>This node simulate charge and discharge of a battery, than publish when the battery is low</p>
+<dl class="simple">
+<dt>Param:</dt><dd><p>/battery_flag to know when the battery have to start to charge or discharge
+/arrived_plan_flag
+/arrived_in_E
+/controller_flag</p>
+</dd>
+</dl>
+<p>Publisher to:</p>
+<blockquote>
+<div><p>/battery</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.battery_low_publisher.talker">
+<span class="sig-prename descclassname"><span class="pre">scripts.battery_low_publisher.</span></span><span class="sig-name descname"><span class="pre">talker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/battery_low_publisher.html#talker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.battery_low_publisher.talker" title="Permalink to this definition"></a></dt>
+<dd><p>The talker is the function that change the level of the battery with a different velocity between charge and discharge
+and publish critical status of the battery like when is level is too low or when is full
+-battery_low is the message when the battery is under a battery_threshold and we need to recharge it
+-battery_ok is the message sent when the battery is full</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.create_map_pub">
+<span id="create-map-module"></span><h1>Create Map Module<a class="headerlink" href="#module-scripts.create_map_pub" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-create_map"></span><p>This node create the ontology of a map they receive information from markers located in the map. To detect the markers messages are published to rotate the camera. It publish a message when it has done</p>
+<p>Publisher to:</p>
+<blockquote>
+<div><p>/send_map
+/rob/joint1_position_controller/command
+/rob/joint4_position_controller/command</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Service:</dt><dd><p>/room_info</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.create_map_pub.ID_callback">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">ID_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/create_map_pub.html#ID_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.create_map_pub.ID_callback" title="Permalink to this definition"></a></dt>
+<dd><p>This function take in to account the detected markers and how much they are</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.create_map_pub.doors">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">doors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#scripts.create_map_pub.doors" title="Permalink to this definition"></a></dt>
+<dd><p>list of doors for each room</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.create_map_pub.endmap">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">endmap</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#scripts.create_map_pub.endmap" title="Permalink to this definition"></a></dt>
+<dd><p>message sent after the building of the map</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.create_map_pub.id_array">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">id_array</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#scripts.create_map_pub.id_array" title="Permalink to this definition"></a></dt>
+<dd><p>list whith all the detected ID</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.create_map_pub.n_marker">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">n_marker</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#scripts.create_map_pub.n_marker" title="Permalink to this definition"></a></dt>
+<dd><p>variable to know the number of detected markers</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.create_map_pub.rotation">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">rotation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#scripts.create_map_pub.rotation" title="Permalink to this definition"></a></dt>
+<dd><p>variable used as message to control the joint that allow the camera rotation</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.create_map_pub.rotation_camera">
+<span class="sig-prename descclassname"><span class="pre">scripts.create_map_pub.</span></span><span class="sig-name descname"><span class="pre">rotation_camera</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/create_map_pub.html#rotation_camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.create_map_pub.rotation_camera" title="Permalink to this definition"></a></dt>
+<dd><p>This function allow the rotation of the camera, than create the map requesting information from the appropriate service</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.planner_pub">
+<span id="planner-module"></span><h1>Planner Module<a class="headerlink" href="#module-scripts.planner_pub" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-planner"></span><p>This node make the plan to know where te robot have to go</p>
+<dl class="simple">
+<dt>Param:</dt><dd><p>/planner_flag controll the activation of the planner</p>
+</dd>
+</dl>
+<p>Publisher to:</p>
+<blockquote>
+<div><p>/planner
+/planner_string</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.planner_pub.talker">
+<span class="sig-prename descclassname"><span class="pre">scripts.planner_pub.</span></span><span class="sig-name descname"><span class="pre">talker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/planner_pub.html#talker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner_pub.talker" title="Permalink to this definition"></a></dt>
+<dd><p>In this function are done some query to understund which is the room where te robot has to go:
+-query to know witch room Robot1 “canReach”
+-query to know the CLASSes of the reachble rooms to know if there are URGENT rooms, is done in a for loop that depend on the lenght of the response array of reachble rooms
+for every query there are some string manipulations to adapt messages to the args of the querys</p>
+<p>there are to publishers:
+/planner that publish a boolean that will be read from the state machine
+/planner_string that publish a string with the room to reach that wiil be read from the controll node</p>
+<p>before publish the two value a check is done to know how much URGENT room there are. if there is only a URGENT room is send this one, if the URGENT roooms are 0 or more than 1 there is a random choice.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.controller_pub">
+<span id="controller-module"></span><h1>Controller Module<a class="headerlink" href="#module-scripts.controller_pub" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-controller"></span><p>This node make the plan to controll the movements of the robot and publish when the robot is arrived</p>
+<dl class="simple">
+<dt>Param:</dt><dd><p>/controller_flag to controll the activation of the controller node</p>
+</dd>
+<dt>Subscribe to:</dt><dd><p>/planner_string
+/odom</p>
+</dd>
+</dl>
+<p>Publisher to:</p>
+<blockquote>
+<div><p>/controller
+/move_base/goal</p>
+</div></blockquote>
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.controller_pub.actual_x">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_pub.</span></span><span class="sig-name descname"><span class="pre">actual_x</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-6.0</span></em><a class="headerlink" href="#scripts.controller_pub.actual_x" title="Permalink to this definition"></a></dt>
+<dd><p>Variable to store actual x coordinate of the robot</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.controller_pub.actual_y">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_pub.</span></span><span class="sig-name descname"><span class="pre">actual_y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11.0</span></em><a class="headerlink" href="#scripts.controller_pub.actual_y" title="Permalink to this definition"></a></dt>
+<dd><p>Variable to store actual y coordinate of the robot</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller_pub.callback">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_pub.</span></span><span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller_pub.html#callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller_pub.callback" title="Permalink to this definition"></a></dt>
+<dd><p>This function that is a subscriber callback, require to the ontology the coordinates to reach, than it set the coordinates as goal to reach for move_base.
+Then after the robot reach the goal, there is the update of the robot position in the ontology using the object property “isIn”,
+than there is the update of timestamps for Robot1 and the new reached room  using rispectively the object property “now” and “visitedAt”
+in this function are import library “datetime” and “calender” to know the actual date and convert it in UNIX timestamp</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller_pub.listener">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_pub.</span></span><span class="sig-name descname"><span class="pre">listener</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller_pub.html#listener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller_pub.listener" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to initialize the subscriber</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller_pub.pose_callback">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_pub.</span></span><span class="sig-name descname"><span class="pre">pose_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller_pub.html#pose_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller_pub.pose_callback" title="Permalink to this definition"></a></dt>
+<dd><p>callback to receive the actual coordinates of robot</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marco Limone.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
