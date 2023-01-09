@@ -15,7 +15,7 @@ For the dowload and installation of this assignment the user need to go in the *
 - Add the files "assignment_robot.gazebo" and "assignment_robot.xacro" to the *urdf* folder of the *robot_urdf* folder
 - Add the file "motors_config_ass,yaml" to the *config* folder of the *robot_urdf* folder
 - Take the "param" folder in the repository and sobstitute the param one in the *planning* folder
-- Sobstitute the file "gmapping.launch" with the one present in the *launch* folder of the *planning* folder
+- Sobstitute the files "gmapping.launch" and "move_base.launch" with the ones present in the *launch* folder of the *planning* folder
 
 
 In the end to run the code you need to run two launch file, the first that run the simulation and the second present in the launch folder of the publishers folder, that start all the node and the state machine:
